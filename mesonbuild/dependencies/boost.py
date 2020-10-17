@@ -643,22 +643,7 @@ class BoostDependency(ExternalDependency):
             roots += [x for x in candidates if x.name.lower().startswith('boost') and x.is_dir()]
         else:
             tmp = []  # type: T.List[Path]
-
-            # Homebrew
-            brew_boost = Path('/usr/local/Cellar/boost')
-            if brew_boost.is_dir():
-                tmp += [x for x in brew_boost.iterdir()]
-
-            # Add some default system paths
-            tmp += [Path('/opt/local')]
-            tmp += [Path('/usr/local/opt/boost')]
-            tmp += [Path('/usr/local')]
-            tmp += [Path('/usr')]
-
-            # Cleanup paths
-            tmp = [x for x in tmp if x.is_dir()]
-            tmp = [x.resolve() for x in tmp]
-            roots += tmp
+            # Do not add any non-explicit paths on nix
 
         return roots
 
